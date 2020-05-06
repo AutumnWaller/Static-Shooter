@@ -23,7 +23,7 @@ public class Player : Character
         mousePos.x = mousePos.x - playerViewport.x;
         mousePos.y = mousePos.y - playerViewport.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg - 90;
-        if(angle <= 89 && angle >= -89)
+        if(angle <= 90 && angle >= -90)
             transform.rotation = Quaternion.Euler(0, -angle, 0);
     }
 
@@ -31,7 +31,9 @@ public class Player : Character
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.position + (transform.forward * 50), out hit)){
             if(hit.transform.tag == "Enemy"){
-                hit.transform.GetComponent<Enemy>().TakeDamage();
+                IDamageable damageable = hit.transform.GetComponent<IDamageable>();
+                damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward);
+                damageable.TakeDamage();
             }
             Debug.Log(hit.transform.name);
         }
