@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : Character
 {
-    public GameObject bullet;
-    void Start()
-    {
-        
-    }
-
+    public ParticleSystem muzzleFlashParticle;
+    Ray ray;
 
     void Update()
     {
+        ray = new Ray(transform.position, transform.forward);
         RotateToMouse();
         if(Input.GetMouseButtonDown(0))
             Shoot();
@@ -28,14 +25,16 @@ public class Player : Character
     }
 
     void Shoot(){
+        muzzleFlashParticle.Play();
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.position + (transform.forward * 50), out hit)){
-            if(hit.transform.tag == "Enemy"){
-                IDamageable damageable = hit.transform.GetComponent<IDamageable>();
-                damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward);
-                damageable.TakeDamage();
-            }
-            Debug.Log(hit.transform.name);
+        Physics.Raycast(ray, out hit);
+        if(hit.transform == null)
+            return;
+        Debug.Log(hit.transform.name);
+        IDamageable damageable;
+        if((damageable = hit.transform.GetComponent<IDamageable>()) != null){
+            damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward * 1000);
+            damageable.TakeDamage();
         }
         Vector3 rot = transform.rotation.eulerAngles;
         rot.x = 90;
@@ -44,7 +43,7 @@ public class Player : Character
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position, transform.position + (transform.forward * 50));
+        Gizmos.DrawRay(ray);
     }
 
 }
