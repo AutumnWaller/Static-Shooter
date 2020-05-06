@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : Character, IDamageable
 {
-    Rigidbody rigidbody;
+    NavMeshAgent agent;
     float knockbackDelay = 0;
     void Start() {
-        rigidbody = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -16,7 +17,7 @@ public class Enemy : Character, IDamageable
             knockbackDelay -= Time.deltaTime;
             if(knockbackDelay <= 0){
                 knockbackDelay = 0;
-                rigidbody.velocity = Vector3.zero;
+                agent.velocity = Vector3.zero;
             }
         }
     }
@@ -29,17 +30,17 @@ public class Enemy : Character, IDamageable
 
     void Die(){
         health = 100;
-        rigidbody.velocity = Vector3.zero;
+        agent.velocity = Vector3.zero;
         knockbackDelay = 0;
         gameObject.SetActive(false);
         //Spawn a "corpse"
     }
     void IDamageable.TakeKnockBack(Vector3 direction){
         Vector3 force = direction; 
-        force.x *= 0.2f;
-        force.y *= 5;
-        force.z *= 0.2f;
-        rigidbody.AddForce(force);
+        force.x *= 0.02f;
+        force.y *= 0.5f;
+        force.z *= 0.02f;
+        agent.velocity += force;
         knockbackDelay = 0.25f;
     }
 }
