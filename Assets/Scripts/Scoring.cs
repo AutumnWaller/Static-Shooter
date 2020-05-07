@@ -4,20 +4,15 @@ using UnityEngine;
 using Unity;
 public class Scoring : MonoBehaviour
 {
-    public TMPro.TextMeshProUGUI scoreText;
     public float distFar = 20;
     public float distMed = 15;
     public float distClose = 10;
     static Scoring instance;
-    float score;
+    [System.NonSerialized]
+    public static float score;
     void Awake()
     {
         instance = this;
-    }
-
-    void Update()
-    {   
-        scoreText.text = score.ToString();
     }
     public static Scoring GetInstance(){
         return instance;

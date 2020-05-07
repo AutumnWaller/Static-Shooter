@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public List<GameObject> UIPrefabs;
+    public Queue<GameObject> activeUI;
+    private UIManager instance;
+
     void Start()
     {
-        
+        activeUI = new Queue<GameObject>();
+        OpenWindow(UIPrefabs[0]);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseWindow();
+        }
     }
+    public void OpenWindow(GameObject ui){
+        GameObject newUI = Instantiate(ui, transform);
+        newUI.SetActive(true);
+        if(activeUI.Count > 0){
+            CloseWindow();
+        }
+        activeUI.Enqueue(newUI);
+    }
+
+    public void CloseWindow(){
+        Destroy(activeUI.Dequeue());
+    }
+
 }

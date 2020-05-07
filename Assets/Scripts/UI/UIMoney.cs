@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIMoney : MonoBehaviour
+public class UIMoney : UI
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public TMPro.TextMeshProUGUI moneyText;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        moneyText.text = Scoring.score.ToString();
     }
 }

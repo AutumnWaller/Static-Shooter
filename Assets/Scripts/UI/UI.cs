@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private UI instance;
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void Awake()
     {
-        
+        instance = this;
     }
 }
