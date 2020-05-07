@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
+        //TODO: Make the timer appear when the round finishes.
+        //TODO: Make a buy menu for ammo and upgrades.
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             CloseWindow();

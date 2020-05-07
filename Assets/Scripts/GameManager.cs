@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    enum WaveState{
+    public enum WaveState{
         Spawning,
         Paused
     }
@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
 
         
     }
+    public WaveState GetWaveState(){
+        return state;
+    }
 
     public void EnemyDied(){
         enemiesAlive--;
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour
     }
 
     void SpawnEnemies(){
-        if(enemiesAlive < maxEnemiesAtOnce){
+        if(enemiesAlive < maxEnemiesAtOnce && enemiesLeftThisWave - enemiesAlive > 0){
             if(timeUntilNewSpawn <= 0){
                 timeUntilNewSpawn = timeBetweenSpawns;
                 spawners[Random.Range(0, spawners.Count)].Spawn(pm.GetEnemyFromPool());
