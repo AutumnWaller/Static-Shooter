@@ -5,25 +5,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int wave;
-    PoolManager poolManager;
+    PoolManager pm;
     public List<Spawner> spawners;
     public GameObject enemyPrefab;
 
     int enemiesAlive = 0;
     public int maxEnemiesAtOnce = 30;
-    float timeUntilNewSpawn = 5;
+    float timeUntilNewSpawn = 1;
 
-    void Awake()
+    void Start()
     {
-        poolManager = PoolManager.GetInstance();
-        poolManager.CreateEnemyPool(enemyPrefab, 30);
+        pm = PoolManager.GetInstance();
+        pm.CreateEnemyPool(enemyPrefab, 30);
     }
     void Update()
     {
         if(enemiesAlive < maxEnemiesAtOnce){
             if(timeUntilNewSpawn <= 0){
-                timeUntilNewSpawn = 5;
-                spawners[Random.Range(0, spawners.Count)].Spawn();
+                timeUntilNewSpawn = 1;
+                spawners[Random.Range(0, spawners.Count)].Spawn(pm.GetEnemyFromPool());
                 enemiesAlive++;
             }else{
                 timeUntilNewSpawn -= Time.deltaTime;

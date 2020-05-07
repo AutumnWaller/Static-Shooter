@@ -13,15 +13,14 @@ public class Spawner : MonoBehaviour
     {
         pm = PoolManager.GetInstance();
     }
-    public void Spawn(){
-        GameObject newEnemy = pm.GetEnemyFromPool();
-        if(newEnemy == null)
+    public void Spawn(GameObject objToSpawn){
+        if(objToSpawn == null)
             return;
         float randomX, randomZ;
         randomX = Random.Range(-spawnerRadius, spawnerRadius);
         randomZ = Random.Range(-spawnerRadius, spawnerRadius);
-        newEnemy.transform.position = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        newEnemy.SetActive(true);
+        objToSpawn.transform.position = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        objToSpawn.SetActive(true);
     }
 
     void OnDrawGizmos()

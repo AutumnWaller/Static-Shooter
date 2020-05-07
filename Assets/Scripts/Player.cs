@@ -30,7 +30,6 @@ public class Player : Character
         Physics.Raycast(ray, out hit);
         if(hit.transform == null)
             return;
-        Debug.Log(hit.transform.name);
         IDamageable damageable;
         if((damageable = hit.transform.GetComponent<IDamageable>()) != null){
             damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward * 1000);

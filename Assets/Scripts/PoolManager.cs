@@ -26,12 +26,13 @@ public class PoolManager : MonoBehaviour
             enemies.Add(clone);
         }
     }
-
+    int a = 0;
     public GameObject GetEnemyFromPool(){
         foreach(GameObject obj in enemies){
             if(!obj.activeInHierarchy)
                 return obj;
         }
+        a = 5;
         return null;
     }
 
