@@ -5,7 +5,7 @@ using Unity;
 public class Scoring : MonoBehaviour
 {
     public float distFar = 20;
-    public float distMed = 15;
+    public float distMid = 15;
     public float distClose = 10;
     static Scoring instance;
     [System.NonSerialized]
@@ -24,7 +24,7 @@ public class Scoring : MonoBehaviour
         float distanceScore;
         if(dist >= distFar){
             distanceScore = 1;
-        }else if(dist >= distMed){
+        }else if(dist >= distMid){
             distanceScore = 2;
         }else if(dist >= distClose){
             distanceScore = 3;

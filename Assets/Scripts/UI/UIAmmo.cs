@@ -5,7 +5,18 @@ using UnityEngine;
 public class UIAmmo : UIBase
 {
     public TMPro.TextMeshProUGUI ammoText;
+    Weapon playerWeapon;
 
+    protected override void Awake(){
+        base.Awake();
+    }
 
+    void Start(){
+        playerWeapon = gmInstance.player.weapon;
+    }
+    protected override void Update(){
+        base.Update();
+        ammoText.text = $"{playerWeapon.ammo.ToString()} Ammo";
+    }
     
 }

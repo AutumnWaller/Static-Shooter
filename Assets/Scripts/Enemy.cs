@@ -22,8 +22,8 @@ public class Enemy : Character, IDamageable
         }
     }
 
-    void IDamageable.TakeDamage(){
-        health -= 25;
+    void IDamageable.TakeDamage(int damage){
+        health -= damage;
         Scoring.GetInstance().EnemyHit(transform.position);
         if(health <= 0)
             Die();
@@ -33,8 +33,9 @@ public class Enemy : Character, IDamageable
         health = 100;
         //agent.velocity = Vector3.zero;
         knockbackDelay = 0;
-        gameObject.SetActive(false);
         Scoring.GetInstance().EnemyKill();
+        GameManager.GetInstance().EnemyDied();
+        gameObject.SetActive(false);
         //Spawn a "corpse"
     }
     void IDamageable.TakeKnockBack(Vector3 direction){

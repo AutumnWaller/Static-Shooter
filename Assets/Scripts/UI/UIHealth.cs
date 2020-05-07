@@ -12,7 +12,7 @@ public class UIHealth : UIBase
     }
     void Start()
     {
-        character = GameManager.GetInstance().player;
+        character = gmInstance.player;
     }
     protected override void Update()
     {
