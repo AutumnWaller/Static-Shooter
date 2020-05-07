@@ -24,22 +24,21 @@ public class Enemy : Character, IDamageable
 
     void IDamageable.TakeDamage(){
         health -= 25;
+        Scoring.GetInstance().EnemyHit(transform.position);
         if(health <= 0)
             Die();
     }
 
     void Die(){
         health = 100;
-        agent.velocity = Vector3.zero;
+        //agent.velocity = Vector3.zero;
         knockbackDelay = 0;
         gameObject.SetActive(false);
+        Scoring.GetInstance().EnemyKill();
         //Spawn a "corpse"
     }
     void IDamageable.TakeKnockBack(Vector3 direction){
         Vector3 force = direction; 
-        force.x *= 0.02f;
-        force.y *= 0.5f;
-        force.z *= 0.02f;
         agent.velocity += force;
         knockbackDelay = 0.25f;
     }

@@ -6,12 +6,21 @@ public class Player : Character
     public ParticleSystem muzzleFlashParticle;
     Ray ray;
 
+    static Transform playerTransform;
+    void Start()
+    {
+        playerTransform = transform;
+    }
     void Update()
     {
         ray = new Ray(transform.position, transform.forward);
         RotateToMouse();
         if(Input.GetMouseButtonDown(0))
             Shoot();
+    }
+
+    public static Transform GetPlayerTransform(){
+        return playerTransform;
     }
 
     void RotateToMouse(){
@@ -32,7 +41,7 @@ public class Player : Character
             return;
         IDamageable damageable;
         if((damageable = hit.transform.GetComponent<IDamageable>()) != null){
-            damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward * 1000);
+            damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward);
             damageable.TakeDamage();
         }
         Vector3 rot = transform.rotation.eulerAngles;

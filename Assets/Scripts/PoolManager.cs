@@ -16,12 +16,11 @@ public class PoolManager : MonoBehaviour
         return instance;
     }
     public void CreateEnemyPool(GameObject obj, int amount){
-        Transform enemyTarget = GameObject.FindGameObjectWithTag("Player").transform;
         for(int i = 0; i < amount; i++){
             GameObject clone = Instantiate(obj, Vector3.zero, Quaternion.identity);
             clone.SetActive(false);
             EnemyNavigation nav = clone.AddComponent<EnemyNavigation>();
-            nav.playerTransform = enemyTarget;
+            nav.playerTransform = Player.GetPlayerTransform();
             clone.name = $"Enemy {i + 1}";
             enemies.Add(clone);
         }
