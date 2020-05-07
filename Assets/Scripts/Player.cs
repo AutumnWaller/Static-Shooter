@@ -19,10 +19,6 @@ public class Player : Character
             Shoot();
     }
 
-    public static Transform GetPlayerTransform(){
-        return playerTransform;
-    }
-
     void RotateToMouse(){
         Vector3 mousePos = Input.mousePosition;
         Vector3 playerViewport = Camera.main.WorldToScreenPoint(transform.position);

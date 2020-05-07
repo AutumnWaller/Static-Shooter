@@ -10,15 +10,17 @@ public class Scoring : MonoBehaviour
     static Scoring instance;
     [System.NonSerialized]
     public static float score;
+    private GameManager gmInstance;
     void Awake()
     {
         instance = this;
+        gmInstance = GameManager.GetInstance();
     }
     public static Scoring GetInstance(){
         return instance;
     }
     float DistanceScore(Vector3 enemyPos){
-        float dist = enemyPos.magnitude - Player.GetPlayerTransform().position.magnitude;
+        float dist = enemyPos.magnitude - gmInstance.player.transform.position.magnitude;
         float distanceScore;
         if(dist >= distFar){
             distanceScore = 1;

@@ -13,6 +13,13 @@ public class GameManager : MonoBehaviour
     public int maxEnemiesAtOnce = 30;
     float timeUntilNewSpawn = 1;
 
+    public Player player;
+
+    private static GameManager instance;
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         pm = PoolManager.GetInstance();
@@ -29,6 +36,10 @@ public class GameManager : MonoBehaviour
                 timeUntilNewSpawn -= Time.deltaTime;
             }
         }
+    }
+
+    public static GameManager GetInstance(){
+        return instance;
     }
 
 }

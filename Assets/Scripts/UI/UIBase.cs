@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class UI : MonoBehaviour
+public class UIBase : MonoBehaviour
 {
-    private UI instance;
+    private UIBase instance;
 
     protected virtual void Awake()
     {
         instance = this;
     }
+
+    protected virtual void Update(){
+    }
+    
 }

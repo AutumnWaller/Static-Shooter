@@ -5,10 +5,12 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     private static PoolManager instance;
+    private GameManager gmInstance;
     public List<GameObject> enemies;
 
     void Awake(){
         instance = this;
+        gmInstance = GameManager.GetInstance();
         enemies = new List<GameObject>();
     }
 
@@ -20,7 +22,7 @@ public class PoolManager : MonoBehaviour
             GameObject clone = Instantiate(obj, Vector3.zero, Quaternion.identity);
             clone.SetActive(false);
             EnemyNavigation nav = clone.AddComponent<EnemyNavigation>();
-            nav.playerTransform = Player.GetPlayerTransform();
+            nav.playerTransform = gmInstance.player.transform;
             clone.name = $"Enemy {i + 1}";
             enemies.Add(clone);
         }

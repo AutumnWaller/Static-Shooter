@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIMoney : UI
+public class UIMoney : UIBase
 {
     public TMPro.TextMeshProUGUI moneyText;
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         moneyText.text = Scoring.score.ToString();
     }
 }
