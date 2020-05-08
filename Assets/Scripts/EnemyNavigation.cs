@@ -11,4 +11,14 @@ public class EnemyNavigation : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.destination = playerTransform.position;
     }
+
+    void Update()
+    {
+        if(GameManager.GetGameState() != GameManager.GameState.Playing){
+            agent.enabled = false;
+        }else{
+            agent.enabled = true;
+            agent.destination = playerTransform.position;
+        }
+    }
 }

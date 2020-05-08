@@ -14,14 +14,16 @@ public class UITime : UIBase
     protected override void Update()
     {
         base.Update();
-        if(gmInstance.GetWaveState() == GameManager.WaveState.Paused){
-            timer -= Time.deltaTime;
-            timerText.text = $"{timer.ToString("0.00")}";
-            if(timer <= 0)
-                timer = 0;
-        }else{
-            timer = 10;
-            timerText.text = "";
+        if(GameManager.GetGameState() == GameManager.GameState.Playing){
+            if(GameManager.GetWaveState() == GameManager.WaveState.Paused){
+                timer -= Time.deltaTime;
+                timerText.text = $"{timer.ToString("0.00")}";
+                if(timer <= 0)
+                    timer = 0;
+            }else{
+                timer = 10;
+                timerText.text = "";
+            }
         }
     }
 }

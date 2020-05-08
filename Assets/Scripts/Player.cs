@@ -14,10 +14,12 @@ public class Player : Character
     }
     void Update()
     {
-        ray = new Ray(transform.position, transform.forward);
-        RotateToMouse();
-        if(Input.GetMouseButtonDown(0))
-            weapon.Shoot();
+        if(GameManager.GetGameState() == GameManager.GameState.Playing){
+            ray = new Ray(transform.position, transform.forward);
+            RotateToMouse();
+            if(Input.GetMouseButtonDown(0))
+                weapon.Shoot();
+        }
     }
 
     void RotateToMouse(){

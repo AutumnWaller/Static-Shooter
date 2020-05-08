@@ -4,23 +4,52 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public List<GameObject> UIPrefabs;
+    public GameObject inGameUI, pauseUI, gameOverUI;
     public Queue<GameObject> activeUI;
-    private UIManager instance;
+    private static UIManager instance;
+    private bool canPause = true;
 
+    public static UIManager GetInstance(){
+        return instance;
+    }
+
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         activeUI = new Queue<GameObject>();
-        OpenWindow(UIPrefabs[0]);
+        OpenWindow(inGameUI);
+        CanPause(true);
     }
 
+    private bool changeUI = true;
+    
+    public void ChangeUI(){
+        changeUI = true;
+    }
+
+    public void CanPause(bool pause){
+        canPause = pause;
+    }
+
+    public bool GetCanPause(){
+        return canPause;
+    }
     void Update()
     {
         //TODO: Make the timer appear when the round finishes.
         //TODO: Make a buy menu for ammo and upgrades.
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            CloseWindow();
+        if(changeUI){
+            changeUI = false;
+            if(GameManager.GetGameState() == GameManager.GameState.GameOver){
+                OpenWindow(gameOverUI);
+            }else if(GameManager.GetGameState() == GameManager.GameState.Paused){
+                OpenWindow(pauseUI);
+            }else if(GameManager.GetGameState() == GameManager.GameState.Playing){
+                OpenWindow(inGameUI);
+            }
         }
     }
     public void OpenWindow(GameObject ui){

@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    public enum GameState{
+        Playing,
+        Paused,
+        GameOver
+    }
+
+    private static GameState gameState = GameState.Playing;
     public enum WaveState{
         Spawning,
         Paused
     }
 
-    WaveState state = WaveState.Paused;
+    private static WaveState state = WaveState.Spawning;
     public int wave;
     public int enemiesLeftThisWave, totalEnemiesThisWave;
     PoolManager pm;
@@ -24,32 +32,49 @@ public class GameManager : MonoBehaviour
     public Player player;
 
     private static GameManager instance;
+    private UIManager uiManagerInstance;
     void Awake()
     {
         instance = this;
     }
     void Start()
     {
+        uiManagerInstance = UIManager.GetInstance();
         pm = PoolManager.GetInstance();
         pm.CreateEnemyPool(enemyPrefab, 30);
-        StartCoroutine(StartNewWave());
     }
     void Update()
     {
-        if(state == WaveState.Spawning){
-            if(enemiesLeftThisWave <= 0){
-                StartCoroutine(StartNewWave());
-                state = WaveState.Paused;
+        if(gameState == GameState.Playing){
+            if(state == WaveState.Spawning){
+                if(enemiesLeftThisWave <= 0){
+                    StartCoroutine(StartNewWave());
+                    state = WaveState.Paused;
+                }
+                if(gameState != GameState.Paused)
+                    SpawnEnemies();
             }
-            SpawnEnemies();
         }
-
-        
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            if(uiManagerInstance.GetCanPause() == true){
+                if(gameState == GameState.Paused)
+                    ChangeGameState(GameState.Playing);
+                else
+                    ChangeGameState(GameState.Paused);
+            }
+        }
     }
-    public WaveState GetWaveState(){
+    public static WaveState GetWaveState(){
         return state;
     }
 
+    public void ChangeGameState(GameState newState){
+        gameState = newState;
+        uiManagerInstance.ChangeUI();
+    }
+    public static GameState GetGameState(){
+        return gameState;
+    }
     public void EnemyDied(){
         enemiesAlive--;
         enemiesLeftThisWave--;
@@ -68,11 +93,13 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator StartNewWave(){
+        uiManagerInstance.CanPause(false);
         yield return new WaitForSeconds(10);
         wave++;
         enemiesLeftThisWave = Mathf.RoundToInt( 5 + (3 * wave));
         totalEnemiesThisWave = enemiesLeftThisWave;
         state = WaveState.Spawning;
+        uiManagerInstance.CanPause(true);
         yield break;
     }
 
