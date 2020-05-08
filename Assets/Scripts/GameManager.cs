@@ -58,9 +58,9 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)){
             if(uiManagerInstance.GetCanPause() == true){
                 if(gameState == GameState.Paused)
-                    ChangeGameState(GameState.Playing);
+                    UnPauseGame();
                 else
-                    ChangeGameState(GameState.Paused);
+                    PauseGame();
             }
         }
     }
@@ -68,6 +68,13 @@ public class GameManager : MonoBehaviour
         return state;
     }
 
+    public void PauseGame(){
+        ChangeGameState(GameState.Paused);
+    }
+
+    public void UnPauseGame(){
+        ChangeGameState(GameState.Playing);
+    }
     public void ChangeGameState(GameState newState){
         gameState = newState;
         uiManagerInstance.ChangeUI();
