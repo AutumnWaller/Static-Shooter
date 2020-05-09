@@ -10,10 +10,12 @@ public class PoolManager : MonoBehaviour
 
     void Awake(){
         instance = this;
-        gmInstance = GameManager.GetInstance();
         enemies = new List<GameObject>();
     }
 
+    void Start(){
+        gmInstance = GameManager.GetInstance();
+    }
     public static PoolManager GetInstance(){
         return instance;
     }

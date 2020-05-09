@@ -14,7 +14,7 @@ public class Player : Character
     }
     void Update()
     {
-        if(GameManager.GetGameState() == GameManager.GameState.Playing){
+        if(State.GetGameState() == State.GameState.Playing){
             ray = new Ray(transform.position, transform.forward);
             RotateToMouse();
             if(Input.GetMouseButtonDown(0))

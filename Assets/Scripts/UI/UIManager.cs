@@ -20,14 +20,18 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         activeUI = new Queue<GameObject>();
+        State.GameStateChanged += ChangeUI;
         OpenWindow(inGameUI);
         CanPause(true);
     }
-
-    private bool changeUI = true;
-    
     public void ChangeUI(){
-        changeUI = true;
+        if(State.GetGameState() == State.GameState.GameOver){
+            OpenWindow(gameOverUI);
+        }else if(State.GetGameState() == State.GameState.Paused){
+            OpenWindow(pauseUI);
+        }else if(State.GetGameState() == State.GameState.Playing){
+            OpenWindow(inGameUI);
+        }
     }
 
     public void CanPause(bool pause){
@@ -37,21 +41,7 @@ public class UIManager : MonoBehaviour
     public bool GetCanPause(){
         return canPause;
     }
-    void Update()
-    {
-        //TODO: Make the timer appear when the round finishes.
-        //TODO: Make a buy menu for ammo and upgrades.
-        if(changeUI){
-            changeUI = false;
-            if(GameManager.GetGameState() == GameManager.GameState.GameOver){
-                OpenWindow(gameOverUI);
-            }else if(GameManager.GetGameState() == GameManager.GameState.Paused){
-                OpenWindow(pauseUI);
-            }else if(GameManager.GetGameState() == GameManager.GameState.Playing){
-                OpenWindow(inGameUI);
-            }
-        }
-    }
+
     public void OpenWindow(GameObject ui){
         GameObject newUI = Instantiate(ui, transform);
         newUI.SetActive(true);

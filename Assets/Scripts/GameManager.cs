@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-    public enum GameState{
-        Playing,
-        Paused,
-        GameOver
-    }
-
-    private static GameState gameState = GameState.Playing;
     public enum WaveState{
         Spawning,
         Paused
@@ -45,22 +37,22 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if(gameState == GameState.Playing){
+        if(State.GetGameState() == State.GameState.Playing){
             if(state == WaveState.Spawning){
                 if(enemiesLeftThisWave <= 0){
                     StartCoroutine(StartNewWave());
                     state = WaveState.Paused;
                 }
-                if(gameState != GameState.Paused)
+                if(State.GetGameState() != State.GameState.Paused)
                     SpawnEnemies();
             }
         }
         if(Input.GetKeyDown(KeyCode.Escape)){
             if(uiManagerInstance.GetCanPause() == true){
-                if(gameState == GameState.Paused)
-                    UnPauseGame();
+                if(State.GetGameState() == State.GameState.Paused)
+                    State.UnPauseGame();
                 else
-                    PauseGame();
+                    State.PauseGame();
             }
         }
     }
@@ -68,20 +60,6 @@ public class GameManager : MonoBehaviour
         return state;
     }
 
-    public void PauseGame(){
-        ChangeGameState(GameState.Paused);
-    }
-
-    public void UnPauseGame(){
-        ChangeGameState(GameState.Playing);
-    }
-    public void ChangeGameState(GameState newState){
-        gameState = newState;
-        uiManagerInstance.ChangeUI();
-    }
-    public static GameState GetGameState(){
-        return gameState;
-    }
     public void EnemyDied(){
         enemiesAlive--;
         enemiesLeftThisWave--;

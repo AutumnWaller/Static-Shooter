@@ -14,7 +14,7 @@ public class UITime : UIBase
     protected override void Update()
     {
         base.Update();
-        if(GameManager.GetGameState() == GameManager.GameState.Playing){
+        if(State.GetGameState() == State.GameState.Playing){
             if(GameManager.GetWaveState() == GameManager.WaveState.Paused){
                 timer -= Time.deltaTime;
                 timerText.text = $"{timer.ToString("0.00")}";
