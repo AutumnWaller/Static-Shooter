@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Player : Character
+public class Player : Damageable, IDamageable
 {
     Ray ray;
+    State stateReference;
 
     public Weapon weapon;
-    static Transform playerTransform;
     void Start()
     {
-        playerTransform = transform;
+        stateReference = State.GetInstance();
         weapon = GetComponent<Weapon>();
     }
+
     void Update()
     {
-        if(State.GetGameState() == State.GameState.Playing){
+        if(stateReference.GetGameState() == State.GameState.Playing){
             ray = new Ray(transform.position, transform.forward);
             RotateToMouse();
             if(Input.GetMouseButtonDown(0))
@@ -32,9 +33,21 @@ public class Player : Character
             transform.rotation = Quaternion.Euler(0, -angle, 0);
     }
 
+    void IDamageable.TakeDamage(int damage){
+        health -= damage;
+        if(health <= 0){
+            stateReference.GameOver();
+        }
+    }
+
+    void IDamageable.TakeKnockBack(Vector3 direction){
+        return; //Player doesn't take knockback
+    }
     void OnDrawGizmos()
     {
         Gizmos.DrawRay(ray);
     }
+
+
 
 }

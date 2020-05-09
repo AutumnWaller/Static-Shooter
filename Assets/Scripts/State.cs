@@ -1,38 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public static class State
+﻿using UnityEngine;
+public class State : MonoBehaviour
 {
     public enum GameState{
         Paused,
         Playing,
         GameOver
     };
-    private static GameState gameState = GameState.Playing;
-    public static GameState GetGameState(){
+    private static State instance;
+    private GameState gameState = GameState.Playing;
+
+    void Awake()
+    {
+        if(!instance)instance = this;
+    }
+    public static State GetInstance(){
+        return instance;
+    }
+    public GameState GetGameState(){
         return gameState;
     }
 
-    public static void ChangeGameState(GameState newState){
+    private void ChangeGameState(GameState newState){
         gameState = newState;
         OnGameStateChanged();
-        // Change to event uiManagerInstance.ChangeUI();
     }
 
     public delegate void StateChanged();
-    public static event StateChanged GameStateChanged;
-    static void OnGameStateChanged(){
+    public event StateChanged GameStateChanged;
+    private void OnGameStateChanged(){
         if(GameStateChanged != null){
             GameStateChanged?.Invoke();
         }
     }
 
-    public static void PauseGame(){
+    public void PauseGame(){
         ChangeGameState(GameState.Paused);
     }
 
-    public static void UnPauseGame(){
+    public void UnPauseGame(){
         ChangeGameState(GameState.Playing);
+    }
+
+    public void GameOver(){
+        ChangeGameState(GameState.GameOver);
     }
 }

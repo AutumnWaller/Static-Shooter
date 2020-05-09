@@ -13,7 +13,12 @@ public class Scoring : MonoBehaviour
     private GameManager gmInstance;
     void Awake()
     {
-        instance = this;
+        if(!instance) instance = this;
+        score = 0;
+    }
+
+    void Start()
+    {
         gmInstance = GameManager.GetInstance();
     }
     public static Scoring GetInstance(){

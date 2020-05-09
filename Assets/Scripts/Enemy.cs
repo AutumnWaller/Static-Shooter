@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : Character, IDamageable
+public class Enemy : Damageable, IDamageable
 {
     NavMeshAgent agent;
     float knockbackDelay = 0;
@@ -38,9 +38,26 @@ public class Enemy : Character, IDamageable
         gameObject.SetActive(false);
         //Spawn a "corpse"
     }
+
+    void DieNoPoints(){
+        health = 100;
+        knockbackDelay = 0;
+        GameManager.GetInstance().EnemyDied();
+        gameObject.SetActive(false);
+    }
     void IDamageable.TakeKnockBack(Vector3 direction){
         Vector3 force = direction; 
         agent.velocity += force;
         knockbackDelay = 0.25f;
     }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.tag == "Barricade" || col.gameObject.tag == "Player"){
+            IDamageable damageable = col.gameObject.GetComponent<IDamageable>();
+            damageable.TakeDamage(50);
+            DieNoPoints();
+        }
+    }
+
 }

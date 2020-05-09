@@ -5,14 +5,19 @@ public class UIBase : MonoBehaviour
 {
     private UIBase instance;
     protected GameManager gmInstance;
+    protected State stateReference;
 
 
     protected virtual void Awake()
     {
-        instance = this;
-        gmInstance = GameManager.GetInstance();
+        if(!instance)instance = this;
     }
 
+    protected virtual void Start()
+    {
+        gmInstance = GameManager.GetInstance();
+        stateReference = State.GetInstance();
+    }
     protected virtual void Update(){
     }
     

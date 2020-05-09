@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public GameObject inGameUI, pauseUI, gameOverUI;
     public Queue<GameObject> activeUI;
     private static UIManager instance;
+    private State stateReference;
     private bool canPause = true;
 
     public static UIManager GetInstance(){
@@ -15,21 +16,22 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if(!instance)instance = this;
     }
     void Start()
     {
         activeUI = new Queue<GameObject>();
-        State.GameStateChanged += ChangeUI;
+        if(!stateReference) stateReference = State.GetInstance();
+        stateReference.GameStateChanged += ChangeUI;
         OpenWindow(inGameUI);
         CanPause(true);
     }
     public void ChangeUI(){
-        if(State.GetGameState() == State.GameState.GameOver){
+        if(stateReference.GetGameState() == State.GameState.GameOver){
             OpenWindow(gameOverUI);
-        }else if(State.GetGameState() == State.GameState.Paused){
+        }else if(stateReference.GetGameState() == State.GameState.Paused){
             OpenWindow(pauseUI);
-        }else if(State.GetGameState() == State.GameState.Playing){
+        }else if(stateReference.GetGameState() == State.GameState.Playing){
             OpenWindow(inGameUI);
         }
     }

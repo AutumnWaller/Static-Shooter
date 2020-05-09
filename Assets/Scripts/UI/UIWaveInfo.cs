@@ -11,6 +11,9 @@ public class UIWaveInfo : UIBase
         base.Awake();
     }
 
+    protected override void Start(){
+        base.Start();
+    }
     protected override void Update(){
         base.Update();
         waveNumberText.text = $"Wave {gmInstance.wave}";

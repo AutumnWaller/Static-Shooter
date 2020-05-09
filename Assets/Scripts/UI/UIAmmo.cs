@@ -11,7 +11,8 @@ public class UIAmmo : UIBase
         base.Awake();
     }
 
-    void Start(){
+    protected override void Start(){
+        base.Start();
         playerWeapon = gmInstance.player.weapon;
     }
     protected override void Update(){
