@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         if (!pm) pm = PoolManager.GetInstance();
         if (!stateReference) stateReference = State.GetInstance();
         stateReference.WaveStateChanged += OnWaveStateChanged;
+        stateReference.GameStateChanged += OnGameStateChanged;
         pm.CreateEnemyPool(enemyPrefab, 30);
         StartEnemies();
     }
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
     void StartEnemies()
     {
         wave++;
-        enemiesLeftThisWave = Mathf.RoundToInt(5 + (3 * wave));
+        enemiesLeftThisWave = Mathf.RoundToInt(2 + (3 * wave));
         totalEnemiesThisWave = enemiesLeftThisWave;
         uiManagerInstance.CanPause(true);
     }
@@ -53,6 +54,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnGameStateChanged()
+    {
+        if(lastGameState == State.GameState.Buying)
+        {
+            StartCoroutine(StartNewWave());
+            stateReference.UnPauseGame();
+        }
+    }
+
+    State.GameState lastGameState;
+
     void Update()
     {
         if (winButton)
@@ -64,7 +76,8 @@ public class GameManager : MonoBehaviour
             if (enemiesLeftThisWave <= 0)
             {
                 stateReference.SetWaveStatePaused();
-                StartCoroutine(StartNewWave());
+                stateReference.Shop();
+                lastGameState = State.GameState.Buying;
             }
             SpawnEnemies();
 

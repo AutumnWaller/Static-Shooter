@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public int damagePerShot;
     public int ammo; //Ammo types?
+    public float knockbackModifier = 1;
     private Ray ray;
     public ParticleSystem muzzleFlashParticle;
 
@@ -30,7 +31,7 @@ public class Weapon : MonoBehaviour
             return;
         IDamageable damageable;
         if((damageable = hit.transform.GetComponent<IDamageable>()) != null){
-            damageable.TakeKnockBack(transform.rotation.eulerAngles + transform.forward);
+            damageable.TakeKnockBack((transform.rotation.eulerAngles + transform.forward) * knockbackModifier);
             damageable.TakeDamage(damagePerShot);
         }
     }

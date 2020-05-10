@@ -5,6 +5,7 @@ public class State : MonoBehaviour
     {
         Paused,
         Playing,
+        Buying,
         GameOver
     };
 
@@ -62,6 +63,11 @@ public class State : MonoBehaviour
     public void GameOver()
     {
         SetGameState(GameState.GameOver);
+    }
+
+    public void Shop()
+    {
+        SetGameState(GameState.Buying);
     }
     #endregion
 

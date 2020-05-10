@@ -7,10 +7,13 @@ public class Player : Damageable, IDamageable
     State stateReference;
 
     public Weapon weapon;
+    private void Awake()
+    {
+        weapon = GetComponent<Weapon>();
+    }
     void Start()
     {
         stateReference = State.GetInstance();
-        weapon = GetComponent<Weapon>();
     }
 
     void Update()

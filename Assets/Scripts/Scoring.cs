@@ -28,13 +28,13 @@ public class Scoring : MonoBehaviour
         float dist = enemyPos.magnitude - gmInstance.player.transform.position.magnitude;
         float distanceScore;
         if(dist >= distFar){
-            distanceScore = 1;
-        }else if(dist >= distMid){
-            distanceScore = 2;
-        }else if(dist >= distClose){
-            distanceScore = 3;
-        }else{
             distanceScore = 5;
+        }else if(dist >= distMid){
+            distanceScore = 3;
+        }else if(dist >= distClose){
+            distanceScore = 2;
+        }else{
+            distanceScore = 1;
         }
         return distanceScore;
     }

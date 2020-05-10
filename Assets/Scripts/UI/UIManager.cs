@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject inGameUI, pauseUI, gameOverUI, timerUI;
+    public GameObject inGameUI, pauseUI, gameOverUI, timerUI, buyUI;
     public Queue<GameObject> activeUI;
     private static UIManager instance;
     private State stateReference;
@@ -31,21 +31,28 @@ public class UIManager : MonoBehaviour
 
     public void ChangeUI()
     {
-        Debug.Log("UI");
-        if (stateReference.GetWaveState() == State.WaveState.Paused)
+        State.GameState gameState = stateReference.GetGameState();
+        State.WaveState waveState = stateReference.GetWaveState();
+
+        if (gameState == State.GameState.GameOver)
+        {
+            OpenWindow(gameOverUI);
+        }
+        else if (gameState == State.GameState.Buying)
+        {
+            OpenWindow(buyUI);
+            CanPause(false);
+        }
+        else if (waveState == State.WaveState.Paused)
         {
             OpenWindow(timerUI);
             CanPause(false);
         }
-        else if (stateReference.GetGameState() == State.GameState.GameOver)
-        {
-            OpenWindow(gameOverUI);
-        }
-        else if (stateReference.GetGameState() == State.GameState.Paused)
+        else if (gameState == State.GameState.Paused)
         {
             OpenWindow(pauseUI);
         }
-        else if (stateReference.GetGameState() == State.GameState.Playing)
+        else if (gameState == State.GameState.Playing)
         {
             OpenWindow(inGameUI);
         }
