@@ -11,23 +11,33 @@ public class UITime : UIBase
     {
         base.Awake();
     }
-
-    protected override void Start(){
+    protected override void Start()
+    {
         base.Start();
     }
+
+    private void OnEnable()
+    {
+        if (!stateReference) stateReference = State.GetInstance();
+    }
+
     protected override void Update()
     {
         base.Update();
-        if(stateReference.GetGameState() == State.GameState.Playing){
-            if(GameManager.GetWaveState() == GameManager.WaveState.Paused){
-                timer -= Time.deltaTime;
-                timerText.text = $"{timer.ToString("0.00")}";
-                if(timer <= 0)
-                    timer = 0;
-            }else{
+        if (stateReference.GetWaveState() == State.WaveState.Paused)
+        {
+            timer -= Time.deltaTime;
+            SetText();
+            if (timer <= 0)
+            {
                 timer = 10;
-                timerText.text = "";
             }
         }
     }
+
+    void SetText()
+    {
+        timerText.text = timer.ToString("0");
+    }
+
 }

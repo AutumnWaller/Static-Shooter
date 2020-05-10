@@ -52,5 +52,13 @@
         "ProjectSettings/":true,
         "temp/":true,
         "Temp/":true
-    }
+    },
+    "editor.quickSuggestions": {
+        "other": false,
+        "comments": false,
+        "strings": false
+    },
+    "editor.wordBasedSuggestions": false,
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.codeLens": false
 }

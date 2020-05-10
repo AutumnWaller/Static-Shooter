@@ -17,7 +17,7 @@ public class UIAmmo : UIBase
     }
     protected override void Update(){
         base.Update();
-        ammoText.text = $"{playerWeapon.ammo.ToString()} Ammo";
+        ammoText.text = $"Ammo: {playerWeapon.ammo.ToString()}";
     }
     
 }

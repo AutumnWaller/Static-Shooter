@@ -1,47 +1,100 @@
 ﻿using UnityEngine;
 public class State : MonoBehaviour
 {
-    public enum GameState{
+    public enum GameState
+    {
         Paused,
         Playing,
         GameOver
     };
+
+    public enum WaveState
+    {
+        Spawning,
+        Paused
+    }
+
     private static State instance;
     private GameState gameState = GameState.Playing;
+    private WaveState waveState = WaveState.Spawning;
 
     void Awake()
     {
-        if(!instance)instance = this;
+        if (!instance) instance = this;
     }
-    public static State GetInstance(){
+    public static State GetInstance()
+    {
         return instance;
     }
-    public GameState GetGameState(){
+
+    // Game State
+    public GameState GetGameState()
+    {
         return gameState;
     }
 
-    private void ChangeGameState(GameState newState){
+    private void SetGameState(GameState newState)
+    {
         gameState = newState;
         OnGameStateChanged();
     }
 
     public delegate void StateChanged();
     public event StateChanged GameStateChanged;
-    private void OnGameStateChanged(){
-        if(GameStateChanged != null){
+    private void OnGameStateChanged()
+    {
+        if (GameStateChanged != null)
+        {
             GameStateChanged?.Invoke();
         }
     }
-
-    public void PauseGame(){
-        ChangeGameState(GameState.Paused);
+    #region SetGameState
+    public void PauseGame()
+    {
+        SetGameState(GameState.Paused);
     }
 
-    public void UnPauseGame(){
-        ChangeGameState(GameState.Playing);
+    public void UnPauseGame()
+    {
+        SetGameState(GameState.Playing);
     }
 
-    public void GameOver(){
-        ChangeGameState(GameState.GameOver);
+    public void GameOver()
+    {
+        SetGameState(GameState.GameOver);
     }
+    #endregion
+
+    //Wave State
+    public WaveState GetWaveState()
+    {
+        return waveState;
+    }
+
+    private void SetWaveState(WaveState state)
+    {
+        waveState = state;
+        OnWaveStateChanged();
+    }
+
+    public event StateChanged WaveStateChanged;
+
+    private void OnWaveStateChanged()
+    {
+        if (WaveStateChanged != null)
+        {
+            WaveStateChanged?.Invoke();
+        }
+    }
+
+    public void SetWaveStatePaused()
+    {
+        SetWaveState(WaveState.Paused);
+    }
+
+    public void SetWaveStateSpawning()
+    {
+        SetWaveState(WaveState.Spawning);
+    }
+
 }
