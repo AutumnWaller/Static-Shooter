@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class UITime : UIBase
 {
-
+    
     public TMPro.TextMeshProUGUI timerText;
-    float timer = 10;
+    
+    private float timer = 10;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,20 +22,23 @@ public class UITime : UIBase
     private void OnEnable()
     {
         if (!stateReference) stateReference = State.GetInstance();
+        StartCoroutine(Countdown());
     }
 
     protected override void Update()
     {
         base.Update();
-        if (stateReference.GetWaveState() == State.WaveState.Paused)
+    }
+
+    private IEnumerator Countdown()
+    {
+        while(timer > 0)
         {
-            timer -= Time.deltaTime;
             SetText();
-            if (timer <= 0)
-            {
-                timer = 10;
-            }
+            yield return new WaitForSeconds(1);
+            timer -= 1;
         }
+        timer = 10;
     }
 
     void SetText()

@@ -48,10 +48,10 @@ public class GameManager : MonoBehaviour
 
     private void OnWaveStateChanged()
     {
-        if (stateReference.GetWaveState() == State.WaveState.Paused)
-        {
-            StartCoroutine(StartNewWave());
-        }
+        //if (stateReference.GetWaveState() == State.WaveState.Paused)
+        //{
+        //    StartCoroutine(StartNewWave());
+        //}
     }
 
     private void OnGameStateChanged()
@@ -59,11 +59,12 @@ public class GameManager : MonoBehaviour
         if(lastGameState == State.GameState.Buying)
         {
             StartCoroutine(StartNewWave());
+            lastGameState = State.GameState.Playing;
             stateReference.UnPauseGame();
         }
     }
 
-    State.GameState lastGameState;
+    State.GameState lastGameState = State.GameState.Playing;
 
     void Update()
     {
@@ -76,9 +77,11 @@ public class GameManager : MonoBehaviour
             if (enemiesLeftThisWave <= 0)
             {
                 stateReference.SetWaveStatePaused();
+                //StartCoroutine(StartNewWave());
                 stateReference.Shop();
                 lastGameState = State.GameState.Buying;
             }
+
             SpawnEnemies();
 
         }

@@ -14,7 +14,7 @@ public class Scoring : MonoBehaviour
     void Awake()
     {
         if(!instance) instance = this;
-        score = 0;
+        score = 150000;
     }
 
     void Start()

@@ -7,7 +7,16 @@ public class RespawnBarricadesButton : PurchaseableButton
     public DamageableBarricade barricade1, barricade2, barricade3;
 
 
+    public TMPro.TextMeshProUGUI costText;
+    private void OnEnable()
+    {
+        UpdatePrice();
+    }
 
+    public void UpdatePrice()
+    {
+        costText.text = price.ToString();
+    }
     public void Buy()
     {
         if (barricade1.health == 100 && barricade2.health == 100 && barricade3.health == 100)

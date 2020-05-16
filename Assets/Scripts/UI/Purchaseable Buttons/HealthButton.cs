@@ -5,10 +5,20 @@ using UnityEngine;
 public class HealthButton : PurchaseableButton
 {
     Player player;
+    public TMPro.TextMeshProUGUI costText;
 
     private void Start()
     {
         player = GameManager.GetInstance().player;
+    }
+    private void OnEnable()
+    {
+        UpdatePrice();
+    }
+
+    public void UpdatePrice()
+    {
+        costText.text = price.ToString();
     }
 
     public void Buy()
