@@ -15,6 +15,6 @@ public class UIMoney : UIBase
     protected override void Update()
     {
         base.Update();
-        moneyText.text = Scoring.score.ToString();
+        moneyText.text = Scoring.money.ToString();
     }
 }

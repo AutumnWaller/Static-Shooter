@@ -23,9 +23,9 @@ public class IncreasedKnockbackButton : PurchaseableButton
     {
         if (timesPurchased < maxPurchaseable)
         {
-            if (prices[timesPurchased] <= Scoring.score)
+            if (prices[timesPurchased] <= Scoring.money)
             {
-                Scoring.score -= prices[timesPurchased];
+                Scoring.money -= prices[timesPurchased];
                 playerWeapon.knockbackModifier = newKnockbackModifier[timesPurchased];
                 timesPurchased++;
                 UpdateCost();

@@ -21,7 +21,7 @@ public class RespawnBarricadesButton : PurchaseableButton
     {
         if (barricade1.health == 100 && barricade2.health == 100 && barricade3.health == 100)
             return;
-        if (Scoring.score >= price)
+        if (Scoring.money >= price)
         {
             barricade1.health = 100;
             barricade2.health = 100;
@@ -29,7 +29,7 @@ public class RespawnBarricadesButton : PurchaseableButton
             barricade1.gameObject.SetActive(true);
             barricade2.gameObject.SetActive(true);
             barricade3.gameObject.SetActive(true);
-            Scoring.score -= price;
+            Scoring.money -= price;
             timesPurchased++;
         }
     }

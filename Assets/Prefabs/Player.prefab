@@ -263,7 +263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916071320078482154}
   m_LocalRotation: {x: -0, y: -0.56186587, z: -0, w: 0.82722837}
-  m_LocalPosition: {x: 0.41, y: 0, z: 0.60300004}
+  m_LocalPosition: {x: 0.40120006, y: 0, z: 0.60300004}
   m_LocalScale: {x: 0.1752, y: 0.10770057, z: 0.7340264}
   m_Children: []
   m_Father: {fileID: 6509815811973020375}
@@ -579,7 +579,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6509815811835148028}
   m_LocalRotation: {x: 0.00000017881392, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.287922, y: 2.938244, z: 3.9329634}
+  m_LocalPosition: {x: -5.287922, y: 2.938244, z: 3.571}
   m_LocalScale: {x: 0.18604308, y: 0.1885699, z: 0.25127167}
   m_Children: []
   m_Father: {fileID: 5678955631054980924}
@@ -5347,7 +5347,7 @@ ParticleSystemRenderer:
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
-  m_VelocityScale: 0.03
+  m_VelocityScale: -0.19
   m_LengthScale: 0.6
   m_SortingFudge: 0
   m_NormalDirection: 1
@@ -5456,9 +5456,10 @@ GameObject:
   - component: {fileID: 6509815811973020374}
   - component: {fileID: 6509815811973020373}
   - component: {fileID: 6509815811973020368}
-  - component: {fileID: 2016741181}
   - component: {fileID: 946251267}
   - component: {fileID: 946251263}
+  - component: {fileID: 6057418317174417196}
+  - component: {fileID: 1662818530889505946}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5545,22 +5546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  weapon: {fileID: 0}
---- !u!114 &2016741181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6509815811973020379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87800b761dad7ce4fa179998fa9a8e28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damagePerShot: 100
-  ammo: 40
-  muzzleFlashParticle: {fileID: 6509815811835148031}
+  weapon: {fileID: 6057418317174417196}
 --- !u!54 &946251267
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5590,6 +5576,118 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3302746, y: 1, z: 2.5540113}
   m_Center: {x: 0.033949852, y: 0, z: 0.7770059}
+--- !u!114 &6057418317174417196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6509815811973020379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87800b761dad7ce4fa179998fa9a8e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePerShot: 25
+  ammo: 40
+  knockbackModifier: 1
+  muzzleFlashParticle: {fileID: 6509815811835148031}
+--- !u!82 &1662818530889505946
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6509815811973020379}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0051045f785f7ba48ba4ab50f9f686be, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 3.630047
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6509815812938427614
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,7 +6150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8512104063610002887}
   m_LocalRotation: {x: -0, y: 0.16569324, z: -0, w: 0.9861773}
-  m_LocalPosition: {x: 0.5258, y: 0, z: 0.0101}
+  m_LocalPosition: {x: 0.517, y: 0, z: 0.0101}
   m_LocalScale: {x: 0.120993115, y: 0.10770057, z: 0.8525}
   m_Children: []
   m_Father: {fileID: 6509815811973020375}

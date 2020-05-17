@@ -9,9 +9,10 @@ public class Weapon : MonoBehaviour
     public float knockbackModifier = 1;
     private Ray ray;
     public ParticleSystem muzzleFlashParticle;
+    private AudioSource gunshotSource;
 
     protected virtual void Awake(){
-
+        gunshotSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Update(){
@@ -25,6 +26,7 @@ public class Weapon : MonoBehaviour
         if(ammo <= 0)
             return;
         muzzleFlashParticle.Play();
+        gunshotSource.PlayOneShot(gunshotSource.clip);
         ammo--;
         Physics.Raycast(ray, out hit);
         if(hit.transform == null)
@@ -34,5 +36,10 @@ public class Weapon : MonoBehaviour
             damageable.TakeKnockBack((transform.rotation.eulerAngles + transform.forward) * knockbackModifier);
             damageable.TakeDamage(damagePerShot);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(ray);
     }
 }

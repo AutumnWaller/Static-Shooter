@@ -23,12 +23,12 @@ public class HealthButton : PurchaseableButton
 
     public void Buy()
     {
-        if (Scoring.score >= price)
+        if (Scoring.money >= price)
         {
             if (player.health == 100)
                 return;
             player.health += 50;
-            Scoring.score -= price;
+            Scoring.money -= price;
             timesPurchased++;
         }
     }

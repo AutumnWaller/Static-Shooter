@@ -24,9 +24,9 @@ public class AmmoButton : PurchaseableButton
 
     public void Buy()
     {
-        if (Scoring.score >= price)
+        if (Scoring.money >= price)
         {
-            Scoring.score -= price;
+            Scoring.money -= price;
             playerWeapon.ammo += 50;
             timesPurchased++;
         }

@@ -35,6 +35,7 @@ public class Enemy : Damageable, IDamageable
         knockbackDelay = 0;
         Scoring.GetInstance().EnemyKill();
         GameManager.GetInstance().EnemyDied();
+        transform.position = Vector3.one * 100;
         gameObject.SetActive(false);
         //Spawn a "corpse"
     }
@@ -53,7 +54,13 @@ public class Enemy : Damageable, IDamageable
 
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Barricade" || col.gameObject.tag == "Player"){
+        if (col.gameObject.tag == "Barricade")
+        {
+            IDamageable damageable = col.gameObject.GetComponent<IDamageable>();
+            damageable.TakeDamage(100);
+            DieNoPoints();
+        }
+        else if (col.gameObject.tag == "Player"){
             IDamageable damageable = col.gameObject.GetComponent<IDamageable>();
             damageable.TakeDamage(50);
             DieNoPoints();

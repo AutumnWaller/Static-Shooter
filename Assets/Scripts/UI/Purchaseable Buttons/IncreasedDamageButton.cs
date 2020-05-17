@@ -31,9 +31,9 @@ public class IncreasedDamageButton : PurchaseableButton
     {
         if (timesPurchased < maxPurchaseable)
         {
-            if (prices[timesPurchased] <= Scoring.score)
+            if (prices[timesPurchased] <= Scoring.money)
             {
-                Scoring.score -= prices[timesPurchased];
+                Scoring.money -= prices[timesPurchased];
                 playerWeapon.damagePerShot = newDamage[timesPurchased];
                 timesPurchased++;
                 UpdateCost();

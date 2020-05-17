@@ -9,12 +9,13 @@ public class Scoring : MonoBehaviour
     public float distClose = 10;
     static Scoring instance;
     [System.NonSerialized]
-    public static float score;
+    public static int money, totalEarnedMoney;
+    private int kills, wavesSurvived;
     private GameManager gmInstance;
     void Awake()
     {
         if(!instance) instance = this;
-        score = 150000;
+        money = 0;
     }
 
     void Start()
@@ -24,9 +25,9 @@ public class Scoring : MonoBehaviour
     public static Scoring GetInstance(){
         return instance;
     }
-    float DistanceScore(Vector3 enemyPos){
+    int DistanceScore(Vector3 enemyPos){
         float dist = enemyPos.magnitude - gmInstance.player.transform.position.magnitude;
-        float distanceScore;
+        int distanceScore;
         if(dist >= distFar){
             distanceScore = 5;
         }else if(dist >= distMid){
@@ -39,10 +40,40 @@ public class Scoring : MonoBehaviour
         return distanceScore;
     }
     public void EnemyHit(Vector3 enemyPos){
-        score += DistanceScore(enemyPos);
+        int distScore = DistanceScore(enemyPos);
+        money += distScore;
+        totalEarnedMoney += distScore;
+        
     }
     public void EnemyKill(){
-        score += 10;
+        money += 10;
+        totalEarnedMoney += 10;
+        kills++;
+    }
+
+    public void SurvivedWave()
+    {
+        wavesSurvived++;
+    }
+
+    public int GetWavesSurvived()
+    {
+        return wavesSurvived;
+    }
+
+    public int GetMoney()
+    {
+        return money;
+    }
+
+    public int GetTotalMoney()
+    {
+        return totalEarnedMoney;
+    }
+
+    public int GetKills()
+    {
+        return kills;
     }
 
 }

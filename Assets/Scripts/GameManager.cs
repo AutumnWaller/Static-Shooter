@@ -7,11 +7,10 @@ public class GameManager : MonoBehaviour
 
     public int wave;
     public int enemiesLeftThisWave, totalEnemiesThisWave;
-    public bool winButton;
+    public bool winButton, loseButton;
     PoolManager pm;
     public List<Spawner> spawners;
     public GameObject enemyPrefab;
-
     int enemiesAlive = 0;
     public int maxEnemiesAtOnce = 30;
     public float timeBetweenSpawns = 3;
@@ -72,11 +71,16 @@ public class GameManager : MonoBehaviour
         {
             enemiesLeftThisWave = 0;
         }
+        if (loseButton)
+        {
+            player.GetComponent<IDamageable>().TakeDamage(100);
+        }
         if (stateReference.GetGameState() == State.GameState.Playing && stateReference.GetWaveState() == State.WaveState.Spawning)
         {
             if (enemiesLeftThisWave <= 0)
             {
                 stateReference.SetWaveStatePaused();
+                Scoring.GetInstance().SurvivedWave();
                 //StartCoroutine(StartNewWave());
                 stateReference.Shop();
                 lastGameState = State.GameState.Buying;
